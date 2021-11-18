@@ -1,14 +1,11 @@
 mdl_Dyn_6dof
 du=pi/180;
 ra=180/pi;
-q=[0,90,0,0,0,0]
-robot.plot(q);
+q=[0,0,0,0,0,0]
 % p560.dyn
 % robot.dyn
-robot.gravity=[0;0;9.81];
-robot.payload(5, [0 0 0])
+% robot.gravity=[0;0;9.81];
 robot.gravload(q)
-
 % tau1=robot.gravload([30,30,30,30,30,30]*du);
 % robot.gravity=[0;0;-9.81];
 % tau2=robot.gravload([30,30,30,30,30,30]*du);
@@ -24,10 +21,10 @@ robot.gravload(q)
 %     end
 % end
 
-% figure('name','ªÓÃö¸`­«¤O­t²ü')
+% figure('name','è‚©é—œç¯€é‡åŠ›è² è·')
 % Q2du=Q2*ra;Q3du=Q3*ra;
 % surfl(Q2du,Q3du,g2);
-% xlabel('\theta_2(deg)');ylabel('\theta_3(deg)');zlabel('Ãö¸`2­«¤O­t²ü');
-% figure('name','¨yÃö¸`­«¤O­t²ü')
+% xlabel('\theta_2(deg)');ylabel('\theta_3(deg)');zlabel('é—œç¯€2é‡åŠ›è² è·');
+% figure('name','è‚˜é—œç¯€é‡åŠ›è² è·')
 % surfl(Q2du,Q3du,g3)
-% xlabel('\theta_2(deg)');ylabel('\theta_3(deg)');zlabel('Ãö¸`3­«¤O­t²ü');
+% xlabel('\theta_2(deg)');ylabel('\theta_3(deg)');zlabel('é—œç¯€3é‡åŠ›è² è·');
