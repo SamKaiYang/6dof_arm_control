@@ -1,14 +1,27 @@
+%% 模型導入
 mdl_Dyn_6dof
 du=pi/180;
 ra=180/pi;
-q=[0,90,0,0,0,0]
-robot.plot(q);
-% p560.dyn
-% robot.dyn
+q=[0,30,0,0,0,0]
 robot.gravity=[0;0;9.81];
 robot.payload(5, [0 0 0])
-robot.gravload(q)
 
+%% 角度 to 角度
+init_ang = [0 0 0 0 0 0];
+targ_ang = [0, pi/6, 0, 0, 0, 0];
+step = 50;
+[q,qd,qdd] = jtraj(init_ang,targ_ang,step);                                %直接得到角度、角速度、角加速度的的序列
+
+grid on
+T=robot.fkine(q);%根據插值，得到末端執行器的位置
+nT=T.T; plot3(squeeze(nT(1,4,:)),squeeze(nT(2,4,:)),squeeze(nT(3,4,:)));%輸出末端點軌跡
+% squeeze函數用於刪除矩陣中的單一維（Remove singleton dimensions）
+torque = robot.gravload(q)
+
+zlim([-1.5 1.5])
+hold on
+robot.plot(q);%動畫展示
+%% dynamic 
 % tau1=robot.gravload([30,30,30,30,30,30]*du);
 % robot.gravity=[0;0;-9.81];
 % tau2=robot.gravload([30,30,30,30,30,30]*du);
