@@ -21,6 +21,7 @@ torque = robot.gravload(q)
 zlim([-1.5 1.5])
 hold on
 robot.plot(q);%動畫展示
+
 %% dynamic 
 % tau1=robot.gravload([30,30,30,30,30,30]*du);
 % robot.gravity=[0;0;-9.81];
