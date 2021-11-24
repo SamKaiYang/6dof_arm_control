@@ -1,16 +1,49 @@
 % ur5_robot = importrobot('ur_description/urdf/ur5_robot.urdf');
+% load exampleRobots.mat lbr
+% lbr.DataFormat = 'row';
+% lbr.Gravity = [0 0 -9.81];
+% q = homeConfiguration(lbr);
+% 
+% show(lbr);
+% showdetails(lbr);
 
 [ur5_robot,info] = loadrobot('universalUR5','DataFormat','column','Gravity',[0 0 -9.81]);
-show(ur5_robot);
+% show(ur5_robot);
+showdetails(ur5_robot);
+
+open_system('simulink/robot_system_toolbox.slx')
 
 initialConfig = homeConfiguration(ur5_robot);
-targetPosition = trvec2tform([0.6 -.1 0.5])
+% targetPosition = trvec2tform([0 0 0.8])
+targetPosition = trvec2tform([0.6 -0.1 0.5])
+% fext = externalForce(ur5_robot,'tool0',[0 0 0 0 0 50],initialConfig);
+fext = externalForce(ur5_robot,'tool0',[0 0 0 0 0 50]);
+
+
+% randConfig = ur5_robot.randomConfiguration;
+% tform = getTransform(ur5_robot,randConfig,'ee_link','base');
+
+% show(ur5_robot,randConfig);
+% show(ur5_robot,randomConfiguration(ur5_robot)); %% 軸隨機角度
+
+
+% 逆運動學
+ik = inverseKinematics('RigidBodyTree',ur5_robot)
+weights = [0.25 0.25 0.25 1 1 1];
+initialguess = ur5_robot.homeConfiguration;
+[configSoln,solnInfo] = ik('tool0',targetPosition,weights,initialguess);
+show(ur5_robot,configSoln);
+
+load_system('simulink/robot_system_toolbox.slx');
+% sim('simulink/robot_system_toolbox.slx')
+% ModelParameterNames = get_param('Task Space Motion Model2','ObjectParameters')
+
 
 % robot = importrobot('iiwa14.urdf')
 % smimport(ur5_robot);
 
 % robot.show
-show(ur5_robot,'visuals','on','collision','off'); 
+% show(ur5_robot,'visuals','on','collision','off'); 
 %% show robot detail data
 % showdetails(ur5_robot)
 
