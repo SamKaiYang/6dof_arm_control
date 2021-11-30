@@ -11,7 +11,7 @@
 % show(ur5_robot);
 showdetails(ur5_robot);
 
-open_system('simulink/robot_system_toolbox.slx')
+open_system('../simulink/robot_system_toolbox.slx')
 
 initialConfig = homeConfiguration(ur5_robot);
 % targetPosition = trvec2tform([0 0 0.8])
